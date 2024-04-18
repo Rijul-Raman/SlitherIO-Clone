@@ -1,7 +1,10 @@
 import pygame 
 import random
 import time
-from . import Player, Orb, Camera, Segments
+from Player import Player
+from Orb import Orb
+from Camera import Camera
+from Segments import Segments
 
 FPS = 60
 MIN_ORB_RADIUS = 3
