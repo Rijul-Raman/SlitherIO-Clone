@@ -8,6 +8,8 @@ from Camera import Camera
 from Segment import Segment
 
 FPS = 60
+SCORE_FONT_COLOR = (255,255,255)
+SCORE_FONT_SIZE = 24
 
 class Game:
     def __init__(self): 
@@ -15,6 +17,8 @@ class Game:
         self.bgcolor=(15, 14, 15)
         self.orb_size=20
         self.number_of_orbs=10
+        pygame.font.init()
+        self.score_font = pygame.font.SysFont(None, SCORE_FONT_SIZE)
 
         pygame.init()
 
@@ -45,13 +49,18 @@ class Game:
             for orb in self.orbs:
                 for seg in self.player.segments:
                     if pygame.Rect.colliderect(orb.rect,seg.rect):
-                        self.orbs.remove(orb)
-                        self.init_orbs(1)
+                        try:
+                            self.orbs.remove(orb)
+                            self.init_orbs(1)
+                        except:
+                            continue
                         
     def render(self):
         for orb in self.orbs:
             orb.draw()
         self.player.draw()
+        score_text = self.score_font.render("Score: {}".format(self.player.score), True, SCORE_FONT_COLOR)
+        self.window.blit(score_text, (10, 10))
 
     def update(self):
         self.player.update()
